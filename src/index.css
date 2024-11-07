@@ -1,16 +1,39 @@
-.auth-container{
+.font-weight-bold{
+    font-weight: 600;
+}
+.auth-container {
+    height: 100vh;
+    width: 100vw;
     background-image: 
-    linear-gradient(-141deg, rgb(0 ,0 ,0 ,63%) 50%, rgba(47, 140, 96, 63%) 100%),
-    url(./assets/background.png);
+        linear-gradient(-141deg, rgba(0, 0, 0, 0.63) 50%, rgba(47, 140, 96, 0.63) 100%),
+        url(./assets/background.png);
     background-position: center center;
     background-size: cover;
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    overflow: hidden; 
+}
+@media (max-width: 768px) {
+    .auth-container {
+        background-size: contain; 
+    }
 }
 
+@media (max-width: 480px) {
+    .auth-container {
+        background-size: contain; 
+    }
+}
 .input-group {
     display: flex;
     flex-wrap: nowrap;
+    justify-content: space-between;
     background-color: #F7F7F7;
     transition: border-color 1s ease-in-out;
+}
+.input-group .left{
+    display: flex;
 }
 .input-group:focus-within{
     border: 1px solid green;
@@ -29,9 +52,12 @@
     border-radius: 4px  0 0 4px;
     padding-left: 10px;
 }
-.input-group-prepend span{
+.input-group-prepend .icon-input{
     border-right: 2px solid #ccc;
     padding-right: 10px;
+}
+.input-group-prepend .icon-showpass{
+    padding-right: 17px;
 }
 .input-group i{
     color: #8391A1;

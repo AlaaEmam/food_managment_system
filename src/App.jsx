@@ -31,7 +31,7 @@ function App() {
       ]
     },
     {
-      path: 'Dashboard',
+      path: 'dashboard',
       element: <MasterLayout/>, 
       errorElement: <NotFound/>,
       children:[

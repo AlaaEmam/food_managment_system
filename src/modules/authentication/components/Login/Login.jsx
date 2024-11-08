@@ -3,7 +3,6 @@ import Logo from '../../../../assets/logo.svg'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import axios from 'axios';
-
 import { toast } from 'react-toastify';
 
 export default function Login() {
@@ -37,8 +36,8 @@ export default function Login() {
     setShowPassword(!showPassword);
 };
 
-  return ( <>
- 
+  return ( 
+  <>
   <div className='auth-container'>
       <div className="container-fluid ">
         <div className="row vh-100 justify-content-center align-content-center">

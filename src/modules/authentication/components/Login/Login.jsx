@@ -102,8 +102,8 @@ export default function Login() {
                   </div>
 
                   <div className="links d-flex justify-content-between mb-3">
-                    <Link to='register' className='text-dark text-monospace text-decoration-none font-weight-bold'>Register Now?</Link>
-                    <Link to='forget-pass' className='text-success text-decoration-none'> Forgot Password?</Link>
+                    <Link to='/register' className='text-dark text-monospace text-decoration-none font-weight-bold'>Register Now?</Link>
+                    <Link to='/forget-pass' className='text-success text-decoration-none'> Forgot Password?</Link>
                   </div>
                   <button className='btn btn-success w-100 p-2 mt-4 mb-2'> Login</button>
                 </form>

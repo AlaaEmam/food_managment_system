@@ -1,0 +1,31 @@
+/* NOT WORK :'( */
+.form-inputs {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+  }
+  
+  @media (min-width: 1200px) {
+    .form-inputs .username {
+      order: 1; /* Username input first */
+    }
+  
+    .form-inputs .email {
+      order: 2; /* Email input second */
+    }
+  
+    .form-inputs .phone {
+      order: 3; /* Phone number input third */
+    }
+  
+    .form-inputs .password {
+      order: 4; /* New password input fourth */
+    }
+  
+    .form-inputs .confirm-password {
+      order: 5; /* Confirm password input fifth */
+    }
+  
+    .form-inputs .country {
+      order: 6; /* Country input last */
+    }
+  }

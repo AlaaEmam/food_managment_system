@@ -38,12 +38,12 @@ export default function ForgetPass() {
                 <p className='text-muted'>Welcome Back! Please enter your details.</p>
               </div>
 
-              <form onSubmit={handleSubmit(onSubmit)} className="col-lg-12 col-sm-12">
+              <form onSubmit={handleSubmit(onSubmit)} className="form-inputs col-lg-12 col-sm-12">
                 <div className="row mb-3 g-3"> 
                   {/* First Column */}
                   <div className='col-md-12 col-lg-6'>
                     {/* INPUT USER NAME */}
-                    <div className="input-group mb-1 rounded-2">
+                    <div className="input-group mb-1 rounded-2 username">
                       <span className="input-group-text">
                         <i className="fa-regular fa-user"></i>
                       </span>
@@ -66,7 +66,7 @@ export default function ForgetPass() {
                     </div>
 
                     {/* INPUT COUNTRY */}
-                    <div className="input-group mb-1 rounded-2">
+                    <div className="input-group mb-1 rounded-2 country">
                       <span className="input-group-text">
                         <i className="fa-solid fa-globe"></i>
                       </span>
@@ -83,7 +83,7 @@ export default function ForgetPass() {
                     </div>
 
                     {/* INPUT NEW PASSWORD */}
-                    <div className="input-group mb-1 rounded-2">
+                    <div className="input-group mb-1 rounded-2 password">
                       <span className="input-group-text">
                         <i className="fa-solid fa-lock"></i>
                       </span>
@@ -115,7 +115,7 @@ export default function ForgetPass() {
                   {/* Second Column */}
                   <div className='col-md-12 col-lg-6'>
                     {/* INPUT EMAIL */}
-                    <div className="input-group mb-1 rounded-2">
+                    <div className="input-group mb-1 rounded-2 email">
                       <span className="input-group-text">
                         <i className="fa-regular fa-envelope"></i>
                       </span>
@@ -138,7 +138,7 @@ export default function ForgetPass() {
                     </div>
 
                     {/* INPUT PHONE NUMBER */}
-                    <div className="input-group mb-1 rounded-2">
+                    <div className="input-group mb-1 rounded-2 phone">
                       <span className="input-group-text">
                         <i className="fa-solid fa-phone"></i>
                       </span>
@@ -160,7 +160,7 @@ export default function ForgetPass() {
                     </div>
 
                     {/* INPUT CONFIRM NEW PASSWORD */}
-                    <div className="input-group mb-1 rounded-2">
+                    <div className="input-group mb-1 rounded-2 confirm-password">
                       <span className="input-group-text">
                         <i className="fa-solid fa-lock"></i>
                       </span>

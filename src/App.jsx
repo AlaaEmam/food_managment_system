@@ -15,6 +15,10 @@ import CategoryData from './modules/categories/components/CategoryData/CategoryD
 import UserList from './modules/users/components/UserList/UserList';
 
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 function App() {
  
   const routes = createBrowserRouter([
@@ -47,6 +51,7 @@ function App() {
 
   return (
     <>
+    <ToastContainer/>
     <RouterProvider router={routes}></RouterProvider>
     </>
   )

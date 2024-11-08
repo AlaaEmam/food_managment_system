@@ -1,23 +1,30 @@
 import React, { useState } from 'react'
 import Logo from '../../../../assets/logo.svg'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import axios from 'axios';
 
+import { toast } from 'react-toastify';
+
 export default function Login() {
+  const navigate = useNavigate(); 
 
   let { 
     register, //collect data and put data in email and password ---> register('email') 
     handleSubmit, //Handle when submit 
     formState: { errors } // get error massage
   } = useForm();
+
   const onSubmit = async (data) => {
     try{
       let response = await axios.post('https://upskilling-egypt.com:3006/api/v1/Users/Login', data);
+      navigate('/dashboard'); 
+      toast.success("Login Successfly")
       console.log(response);
-    navigate('/dashboard');
+      
     }catch(error){
       console.log(error);
+      toast.error(error.response?.data.message || 'An error occurred'); // Handle errors
     }
       // show data after form submission
       // console.log(data);
@@ -30,8 +37,9 @@ export default function Login() {
     setShowPassword(!showPassword);
 };
 
-  return (
-    <div className='auth-container'>
+  return ( <>
+ 
+  <div className='auth-container'>
       <div className="container-fluid ">
         <div className="row vh-100 justify-content-center align-content-center">
           <div className="col-md-6 col-sm-6 bg-white rounded-2 px-5 py-3">
@@ -100,7 +108,7 @@ export default function Login() {
                     </div>
                      <div className="input-group-prepend ">
                         <span className="icon-showpass" onClick={togglePasswordVisibility} style={{ cursor: 'pointer' }}>
-                            {showPassword ? <i className="fa-solid fa-eye-slash"></i> : <i className="fa-solid fa-eye"></i>}
+                            {showPassword ? <i className="fa-solid fa-eye"></i> : <i className="fa-solid fa-eye-slash"></i>}
                         </span>
                     </div>
                 </div>
@@ -120,5 +128,6 @@ export default function Login() {
         </div>
       </div>
     </div>
+  </>
   )
 }

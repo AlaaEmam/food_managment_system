@@ -41,15 +41,12 @@ export default function ForgetPass() {
                 <p className='text-muted'>Welcome Back! Please enter your details</p>
               </div>
 
-              <form onSubmit={handleSubmit(onSubmit)} className="col-lg-12 col-sm-12 " action="">
+              <form onSubmit={handleSubmit(onSubmit)} className="col-lg-12 col-sm-12 ">
                 {/* INPUT EMAIL */}
                 <div className="input-group mb-1 rounded-2 ">
-                  <div className="left">
-                    <div className="input-group-prepend">
-                        <span className="icon-input" id="basic-addon1">
-                        <i className="fa-regular fa-envelope"></i>
+                        <span className="input-group-text">
+                            <i className="fa-regular fa-envelope"></i>
                           </span>
-                      </div>
                         <input 
                         type="text" 
                         className="input-style bg-transparent"
@@ -66,7 +63,7 @@ export default function ForgetPass() {
                         })}
                         />
                   </div>
-                </div>
+            
                 <div className='mb-3'>                
                   {errors.email && <span className='text-danger'>{errors.email.message}</span>}
                 </div>

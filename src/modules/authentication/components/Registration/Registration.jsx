@@ -13,7 +13,7 @@ export default function ForgetPass() {
   const onSubmit = async (data) => {
     try {
       let response = await axios.post('https://upskilling-egypt.com:3006/api/v1/Users/Register', data);
-      navigate('/login');
+      navigate('/verification');
       toast.success(response.data.message);
     } catch (error) {
       toast.error(error.response?.data.message || 'An error occurred');

@@ -13,6 +13,7 @@ import RecipeData from './modules/recipes/components/RecipeData/RecipeData';
 import CategoriesList from './modules/categories/components/CategoriesList/CategoriesList';
 import CategoryData from './modules/categories/components/CategoryData/CategoryData';
 import UserList from './modules/users/components/UserList/UserList';
+import VerificationRegister from './modules/authentication/components/VerificationRegister/VerificationRegister';
 
 
 import { ToastContainer } from 'react-toastify';
@@ -32,6 +33,7 @@ function App() {
         {path: 'register' ,element:<Registration/>},
         {path: 'forget-pass' ,element:<ForgetPass/>},
         {path: 'reset-pass' ,element:<ResetPass/>},
+        {path: 'verification' ,element:<VerificationRegister/>}
       ]
     },
     {

@@ -16,7 +16,7 @@ export default function VerificationRegister() {
 
   const onSubmit = async (data) => {
     try{
-      let response = await axios.put('https://upskilling-egypt.com:3006/api/v1/Users/verify', data);
+      let response = await axios.put('https://upskilling-egypt.com:3006/api/v1/Users/ ', data);
       navigate('/dashboard'); 
       toast.success(response.data.message);
       console.log(response.data.message);

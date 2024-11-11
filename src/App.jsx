@@ -14,22 +14,37 @@ import CategoriesList from './modules/categories/components/CategoriesList/Categ
 import CategoryData from './modules/categories/components/CategoryData/CategoryData';
 import UserList from './modules/users/components/UserList/UserList';
 import VerificationRegister from './modules/authentication/components/VerificationRegister/VerificationRegister';
+import ProtectedRoute from './modules/shared/components/ProtectedRoute/ProtectedRoute';
 
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useState } from 'react';
+import { jwtDecode } from 'jwt-decode';
 
 
 function App() {
- 
+
+
+  // Function decode Token 
+ const [loginData, setLoginData] = useState(null); 
+ //output :setLoginData=null --> not logged in user 
+ //output :setLoginData= encodedToken -->  logged in user 
+  let saveLoginData = () =>{
+    let decodeedToken = localStorage.getItem("token");
+    let encodedToken = jwtDecode(decodeedToken);
+    // console.log(encodedToken);
+    setLoginData(encodedToken);
+  }
+
   const routes = createBrowserRouter([
     {
       path: '',
       element: <AuthLayout/>, 
       errorElement: <NotFound/>,
       children:[
-        {index: true ,element: <Login/>},
-        {path: 'login' ,element: <Login/>},
+        {index: true ,element: <Login saveLoginData={saveLoginData}/>},
+        {path: 'login' ,element: <Login saveLoginData={saveLoginData}/>},
         {path: 'register' ,element:<Registration/>},
         {path: 'forget-pass' ,element:<ForgetPass/>},
         {path: 'reset-pass' ,element:<ResetPass/>},
@@ -38,7 +53,11 @@ function App() {
     },
     {
       path: 'dashboard',
-      element: <MasterLayout/>, 
+      element: (
+        <ProtectedRoute>
+        <MasterLayout/>
+      </ProtectedRoute>
+      ),
       errorElement: <NotFound/>,
       children:[
         {index: true ,element: <Dashboard/>},

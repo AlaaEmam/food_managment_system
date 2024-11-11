@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-export default function Login() {
+export default function Login({saveLoginData}) {  
   const navigate = useNavigate();
 
   const { 
@@ -17,6 +17,8 @@ export default function Login() {
   const onSubmit = async (data) => {
     try {
       let response = await axios.post('https://upskilling-egypt.com:3006/api/v1/Users/Login', data);
+      localStorage.setItem("token",response.data.token); 
+      saveLoginData();
       navigate('/dashboard');
       toast.success("Login Successfully");
       console.log(response);

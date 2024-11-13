@@ -1,0 +1,40 @@
+.sidebar-container .ps-sidebar-container {
+    background-color: #1F263E;
+    color: white;
+    height: 100vh;
+    border-top-right-radius:58px;
+
+}
+.css-1wvake5{
+   
+    border-right-width: none !important; 
+    border-right-style: none !important ; 
+    border-color:transparent !important;
+
+}
+.sidebar-container .logo-menu-item{
+    margin-left: 2rem;
+}
+.sidebar-container .ps-menu-button:hover {
+    background-color: rgba(0, 148, 79, 0.5) !important;
+    border-left: 4px solid #009247;
+}
+.sidebar-container .logo-menu-item .ps-menu-button:hover {
+    background-color: transparent !important ;
+    border-left: none;
+}
+
+.sidebar-logo.expanded {
+    width: 100px; 
+    height: auto; 
+    margin: 45px auto 74.5px;
+    transition: width 0.5s ease, height 0.5s ease, margin 0.5s ease;
+}
+  
+.sidebar-logo.collapsed {
+    width: 77px;
+    height: auto;
+    margin: 45px auto 74.5px;
+    transition: width 0.5s ease, height 0.5s ease, margin 0.5s ease;
+}
+

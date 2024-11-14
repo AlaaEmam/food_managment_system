@@ -67,3 +67,19 @@
     background-size: cover;
 }
 
+.dashboard-container{
+    background-color: #F0FFEF;
+    border-radius: 15px;
+}
+
+.dashboard-container button{
+
+    width: 223px;
+    height: 48px;
+    left: 1155px;
+    top: 523px;
+
+    background: #009247;
+    border-radius: 8px;
+
+}

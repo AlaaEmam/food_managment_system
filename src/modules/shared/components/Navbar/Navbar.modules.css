@@ -1,0 +1,41 @@
+.navbar {
+  padding: 0.5rem 1rem;
+  background-color: #e9ecef;
+  border-radius: 16px;
+  box-shadow: 0px 8px 30px rgba(9, 33, 57, 0.08);
+
+}
+
+.input-group {
+  width: 500px;
+  height: 30px;
+  background: #FFFFFF;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.navbar-text {
+  margin-right: 1rem;
+}
+
+.badge {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+}
+
+.input-style{
+  padding: 0 0 0 45px;
+}
+.input-group .search-icon {
+  background-color: #fff !important;
+  border-radius: inherit;
+  height: inherit;
+  font-size: 14px;
+  position: absolute;
+  padding-left: 13px;
+}
+.avatar {
+  width: 40px;
+  height: 40px; 
+  border-radius: 50%; 
+}

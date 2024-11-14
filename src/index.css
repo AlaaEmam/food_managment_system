@@ -1,3 +1,7 @@
+*{
+    font-family: "Roboto", sans-serif;
+}
+
 .font-weight-bold{
     font-weight: 600;
 }
@@ -54,3 +58,12 @@
 .icon-showpass {
     padding-left: 10px; 
 }
+
+.header-container{
+    margin-block: 32px;
+    background-image: url(./assets/header.png);
+    height: 25%;
+    border-radius: 15px;
+    background-size: cover;
+}
+

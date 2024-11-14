@@ -19,7 +19,7 @@ import ProtectedRoute from './modules/shared/components/ProtectedRoute/Protected
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 
 
@@ -36,6 +36,13 @@ function App() {
     // console.log(encodedToken);
     setLoginData(encodedToken);
   }
+
+
+  // if i refresh browers after login the data will be null 
+  useEffect(()=>{
+    if(localStorage.getItem('token')) //if logged in after refresh and you make sure this user login 
+    saveLoginData(); // get data of this user
+  } ,[])
 
   const routes = createBrowserRouter([
     {
@@ -54,13 +61,13 @@ function App() {
     {
       path: 'dashboard',
       element: (
-        <ProtectedRoute>
-        <MasterLayout/>
+        <ProtectedRoute loginData={loginData}>
+        <MasterLayout loginData={loginData} />
       </ProtectedRoute>
       ),
       errorElement: <NotFound/>,
       children:[
-        {index: true ,element: <Dashboard/>},
+        {index: true ,element: <Dashboard loginData={loginData}/>},
         {path: 'recipes' ,element: <RecipesList/>},
         {path: 'recipe-data' ,element:<RecipeData/>},
         {path: 'categories' ,element:<CategoriesList/>},

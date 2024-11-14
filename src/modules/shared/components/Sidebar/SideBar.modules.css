@@ -1,3 +1,10 @@
+.menu-item.active {
+    background-color: #007bff; /* Change to your preferred color */
+    color: white; /* Change text color if needed */
+  }
+
+
+
 .sidebar-container .ps-sidebar-container {
     background-color: #1F263E;
     color: white;

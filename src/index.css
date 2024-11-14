@@ -83,3 +83,8 @@
     border-radius: 8px;
 
 }
+
+.table>thead{
+    --bs-table-bg: #E2E5EB 
+    ;
+}

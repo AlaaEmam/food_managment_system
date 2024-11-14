@@ -23,9 +23,8 @@ export default function Dashboard({ loginData }) {
       <Link to='/dashboard/recipes' >
       <button className=' btn btn-success  p-2 mt-4 mb-2 tex'>Fill Recipes<i className="fa-solid fa-arrow-right px-2"></i> </button>
       </Link>
-      
       </div>
-    </div>
+  </div>
     </>
   );
 }

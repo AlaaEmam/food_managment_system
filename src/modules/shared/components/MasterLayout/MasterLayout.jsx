@@ -9,7 +9,7 @@ export default function MasterLayout({loginData}) {
       <div>
         <SideBar/>
       </div>
-      <div className='w-100 p-3 mt-3'>
+      <div className='w-100 p-4 mt-3'>
         <Navbar loginData={loginData}/>
         
         {/* showing  RecipesList - RecipeData - CategoriesList - CategoryData - UserList */}

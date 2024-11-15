@@ -1,39 +1,98 @@
+import character from '../../../../assets/character.svg'
+import closeButton from '../../../../assets/closeButton.png'
+ 
 import React, { useEffect, useState } from 'react'
 import Header from '../../../shared/components/Header/Header'
-import avatar from '../../../../assets/userlist.png';
-import Table from 'react-bootstrap/Table';
-import axios from 'axios';
+import avatar from '../../../../assets/userlist.png'
+import Table from 'react-bootstrap/Table'
+import axios from 'axios'
 import View from '../../../../assets/View.png'
 import Edit from '../../../../assets/Edit.png'
 import Delete from '../../../../assets/delete.png'
-
-import Dropdown from 'react-bootstrap/Dropdown';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
+import Button from 'react-bootstrap/Button'
+import Modal from 'react-bootstrap/Modal'
+import { toast } from 'react-toastify';
 
 export default function CategoriesList() {
 
   const [categoriesList ,setCategoriesList]= useState([]);
+  const [selectedId ,setSelectedId] = useState(0);
 
   let getCategoriesList = async() => {
     try{
-      let response = await axios.get('https://upskilling-egypt.com:3006/api/v1/Category/?pageSize=10&pageNumber=1',
+      let response = await axios.get(`https://upskilling-egypt.com:3006/api/v1/Category/?pageSize=10&pageNumber=1`,
         {
           headers: {Authorization:localStorage.getItem("token")},
         }
       );
       setCategoriesList(response.data.data)
-      console.log(response.data.data);
+      // console.log(response.data.data);
     }catch(error){
      console.log(error);
     }
   }
+  //Handle delete 
+  let deleteCategory = () =>{
+    try{
+        let response = axios.delete(`https://upskilling-egypt.com:3006/api/v1/Category/${selectedId}`,
+          {
+            headers: {Authorization:localStorage.getItem("token")},
+          }
+        );
+        console.log(response);
+        getCategoriesList();
+        toast.success("Operation completed successfully!");
+      }catch(error){
+        toast.error("An error occurred. Please try again."); // Handle errors
+        // console.error("error");
+      }
+    // alert("deleteee");
+    // alert(selectedId);
+    handleClose();
+  };
 
   useEffect(() =>{
     getCategoriesList()
   },[]);
 
+
+  //Handle Modal
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = (id) => {
+    setSelectedId(id);
+    //alert(id);
+    setShow(true);
+
+  };
+
+
   return (
    <>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header >
+        <img src={closeButton} onClick={handleClose} alt="" />
+        </Modal.Header>
+        <Modal.Body>
+         <div className="text-center">
+         <img src={character} alt="" />
+          <h5>Delete This Category ?</h5>
+          <p className='text-muted'>are you sure you want to delete this item ? if you are sure just click on delete it</p>  
+         </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button 
+          className="btn-danger" 
+          onClick={deleteCategory}
+          aria-hidden="true"
+          >
+          Delete this Categories
+          </Button>
+        </Modal.Footer>
+      </Modal> 
+       
       <Header 
       title={'Categories '} 
       textLight={'Item'} 
@@ -70,18 +129,18 @@ export default function CategoriesList() {
           <td>{category.creationDate}</td>
           <td>
           <div className="dropdown">
-            <button className=" dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fa-solid fa-ellipsis"></i>
-            </button>
+            <div type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i className="fa-solid fa-ellipsis text-success"></i>
+            </div>
             <ul className="dropdown-menu">
-              <li><Link className="dropdown-item" href="#"><img src={View} alt="" />View</Link></li>
-              <li><Link className="dropdown-item" href="#"><img src={Edit} alt="" />Edit</Link></li>
-              <li><Link className="dropdown-item" href="#"><img src={Delete} alt="" />Delete</Link></li>
+              <li><Link className="dropdown-item"  onClick={handleShow} href="#"><img src={View} alt="" />View</Link></li>
+              <li><Link className="dropdown-item"  onClick={handleShow}  href="#"><img src={Edit} alt="" />Edit</Link></li>
+              <li><Link className="dropdown-item"  onClick={()=> handleShow(category.id)} href="#"><img src={Delete} alt="" />Delete</Link></li>
             </ul>
           </div>
           </td>
         </tr>
-      )}
+      )} 
       </tbody>
     </Table>
   

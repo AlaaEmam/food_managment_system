@@ -1,12 +1,11 @@
 import React from 'react';
-import './Header.css';
 
 
 export default function Header({ title, textLight ,description, img ,height }) {
   
   return (
     <div className='header-container text-white p-5 d-flex justify-content-between position-relative align-items-center'
-    style={{ height: height || '40vh' }}
+    style={{ height: height || '30vh' }}
     >
       <div className='caption '>
         <h3 className='fw-bold fs-1'>

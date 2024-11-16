@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom'
 
 import { toast } from 'react-toastify';
 import DeleteConfirmation from '../../../shared/components/DeleteConfirmation/DeleteConfirmation'
+import NoData from './../../../shared/components/NoData/NoData';
 
 export default function CategoriesList() {
 
@@ -75,7 +76,7 @@ export default function CategoriesList() {
     textLight={'Item'} 
     description={'You can now add your items that any user can order it from the Application and you can edit'}
     img={<img src={avatar} alt="User Avatar" />}
-    height={"30vh"}
+    height={"170px"}
     />
 
     <DeleteConfirmation 
@@ -92,42 +93,41 @@ export default function CategoriesList() {
           <p className='fw-light'>You can check all details</p>
         </div>
         <div className='end-0'>
-        <button className=' btn btn-success  p-2 mt-4 mb-2 tex'>Add New Category</button>
+        <button className=' btn btn-success p-3 mt-4 mb-4'>Add New Category</button>
         </div>
   </div>
 
+
+    <div class="w-100 rounded-5 py-4 px-5 mb-4 bg-secondary-subtle d-flex justify-content-between align-items-center" >
+      <h6>Name</h6>
+      <h6>Actions</h6>
+    </div>
     <div>
-    <Table striped borderless hover size="sm">
-      <thead className='bg-success'>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Created Date</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-      {categoriesList.map(category =>
-        <tr>
-          <td>{category.id}</td>
-          <td>{category.name}</td>
-          <td>{category.creationDate}</td>
-          <td>
-          <div className="dropdown">
-            <div type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i className="fa-solid fa-ellipsis text-success"></i>
-            </div>
-            <ul className="dropdown-menu">
-              <li><Link className="dropdown-item"  onClick={handleShow} href="#"><img src={View} alt="" />View</Link></li>
-              <li><Link className="dropdown-item"  onClick={handleShow}  href="#"><img src={Edit} alt="" />Edit</Link></li>
-              <li><Link className="dropdown-item"  onClick={()=> handleShow(category.id)} href="#"><img src={Delete} alt="" />Delete</Link></li>
-            </ul>
-          </div>
-          </td>
-        </tr>
-      )} 
-      </tbody>
-    </Table>
+    {categoriesList.length > 0 ? <NoData/> 
+    // <Table striped borderless hover >
+    //   <tbody>
+    //  { categoriesList.map((category) =>
+    //     <tr key={category.id}>
+    //       <td>{category.id}</td>
+    //       <td>{category.name}</td>
+    //       <td>{category.creationDate}</td>
+    //       <td>
+    //       <div className="dropdown">
+    //         <div type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    //         <i className="fa-solid fa-ellipsis text-success"></i>
+    //         </div>
+    //         <ul className="dropdown-menu">
+    //           <li><Link className="dropdown-item"  onClick={handleShow} href="#"><img src={View} alt="" />View</Link></li>
+    //           <li><Link className="dropdown-item"  onClick={handleShow}  href="#"><img src={Edit} alt="" />Edit</Link></li>
+    //           <li><Link className="dropdown-item"  onClick={()=> handleShow(category.id)} href="#"><img src={Delete} alt="" />Delete</Link></li>
+    //         </ul>
+    //       </div>
+    //       </td>
+    //     </tr>
+    //   ) } 
+    //   </tbody>
+    // </Table>
+     : <NoData/> }
   
     </div>
    </>

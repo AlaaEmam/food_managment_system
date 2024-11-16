@@ -1,5 +1,4 @@
-import character from '../../../../assets/character.svg'
-import closeButton from '../../../../assets/closeButton.png'
+
  
 import React, { useEffect, useState } from 'react'
 import Header from '../../../shared/components/Header/Header'
@@ -10,9 +9,9 @@ import View from '../../../../assets/View.png'
 import Edit from '../../../../assets/Edit.png'
 import Delete from '../../../../assets/delete.png'
 import { Link } from 'react-router-dom'
-import Button from 'react-bootstrap/Button'
-import Modal from 'react-bootstrap/Modal'
+
 import { toast } from 'react-toastify';
+import DeleteConfirmation from '../../../shared/components/DeleteConfirmation/DeleteConfirmation'
 
 export default function CategoriesList() {
 
@@ -70,36 +69,22 @@ export default function CategoriesList() {
 
 
   return (
-   <>
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header >
-        <img src={closeButton} onClick={handleClose} alt="" />
-        </Modal.Header>
-        <Modal.Body>
-         <div className="text-center">
-         <img src={character} alt="" />
-          <h5>Delete This Category ?</h5>
-          <p className='text-muted'>are you sure you want to delete this item ? if you are sure just click on delete it</p>  
-         </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button 
-          className="btn-danger" 
-          onClick={deleteCategory}
-          aria-hidden="true"
-          >
-          Delete this Categories
-          </Button>
-        </Modal.Footer>
-      </Modal> 
-       
-      <Header 
-      title={'Categories '} 
-      textLight={'Item'} 
-      description={'You can now add your items that any user can order it from the Application and you can edit'}
-      img={<img src={avatar} alt="User Avatar" />}
-      height={"30vh"}
-      />
+   <> 
+    <Header 
+    title={'Categories '} 
+    textLight={'Item'} 
+    description={'You can now add your items that any user can order it from the Application and you can edit'}
+    img={<img src={avatar} alt="User Avatar" />}
+    height={"30vh"}
+    />
+
+    <DeleteConfirmation 
+    show={show}
+    handleClose={handleClose}
+    deleteItem={'Category'}
+    deleteFunction={deleteCategory}
+    />
+
 
   <div className='d-flex justify-content-between position-relative align-items-center'>
         <div className='caption '>
@@ -109,7 +94,7 @@ export default function CategoriesList() {
         <div className='end-0'>
         <button className=' btn btn-success  p-2 mt-4 mb-2 tex'>Add New Category</button>
         </div>
-    </div>
+  </div>
 
     <div>
     <Table striped borderless hover size="sm">

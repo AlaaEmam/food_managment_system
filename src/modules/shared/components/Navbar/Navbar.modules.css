@@ -3,9 +3,17 @@
   background-color: #e9ecef;
   border-radius: 16px;
   box-shadow: 0px 8px 30px rgba(9, 33, 57, 0.08);
-
 }
-
+.badge {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+}
+.avatar {
+  width: 40px;
+  height: 40px; 
+  border-radius: 50%; 
+} 
+/* 
 .input-group {
   width: 500px;
   height: 30px;
@@ -18,10 +26,6 @@
   margin-right: 1rem;
 }
 
-.badge {
-  font-size: 0.75rem;
-  padding: 0.25rem 0.5rem;
-}
 
 .input-style{
   padding: 0 0 0 45px;
@@ -34,8 +38,4 @@
   position: absolute;
   padding-left: 13px;
 }
-.avatar {
-  width: 40px;
-  height: 40px; 
-  border-radius: 50%; 
-}
+*/

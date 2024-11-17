@@ -2,7 +2,7 @@
 import Header from '../../../shared/components/Header/Header'
 import avatar from '../../../../assets/userlist.png'
 import axios from 'axios'
-import SmallHeader from '../../../shared/components/SmallHeader/SmallHeader'
+// import SmallHeader from '../../../shared/components/SmallHeader/SmallHeader'
 import Table from 'react-bootstrap/Table'
 import View from '../../../../assets/View.png'
 import Edit from '../../../../assets/Edit.png'
@@ -12,6 +12,7 @@ import { toast } from 'react-toastify';
 import DeleteConfirmation from '../../../shared/components/DeleteConfirmation/DeleteConfirmation'
 import NoData from './../../../shared/components/NoData/NoData';
 import NoImage from '../../../../assets/noimg.jpg';
+import { Modal } from 'react-bootstrap'
 export default function RecipesList() {
   const [recipesList ,setRecipesList]= useState([]);
   const [selectedId ,setSelectedId] = useState(0);
@@ -59,7 +60,15 @@ const imageBaseURL = 'https://upskilling-egypt.com:3006'; // Set the base URL
     setSelectedId(id);
     setShowDelete(true);
   };
+  //Handle Modal Add
+  const [showAdd, setShowAdd] = useState(false);
+  const handleCloseAdd = () => setShowAdd(false);
+  const handleShowAdd = (id) => {
+    setSelectedId(id);
+    setShowAdd(true);
+  };
 
+  
   
 
   return (
@@ -71,10 +80,39 @@ const imageBaseURL = 'https://upskilling-egypt.com:3006'; // Set the base URL
   img={<img src={avatar} alt="User Avatar" />}
   height={"170px"}
   />
-  
-  <SmallHeader 
-     title={'Recipes'} 
-    />
+
+{/* Small Header  */}
+  <div className='d-flex justify-content-between position-relative align-items-center'>
+            <div className='caption '>
+              <h5 className='fw-medium'> Recipes Table Details</h5>
+              <p className='fw-light'>You can check all details</p>
+            </div>
+            <div className='end-0'>
+            <button className=' btn btn-success p-3 mt-4 mb-4' onClick={handleShowAdd} >Add New Recipes</button>
+            </div>
+  </div>
+   {/* <Modal show={showAdd} onHide={handleCloseAdd}>
+        <Modal.Header >
+        <img src={closeButton} onClick={handleCloseAdd} alt="" />
+        </Modal.Header>
+        <Modal.Body>
+         <div className="text-center">
+         <img src={character} alt="" />
+          <h5 className='mt-4'>Add This Recipe </h5>
+          <p className='text-muted'>are you sure you want to Add this item ? if you are sure just click on Add it</p>  
+         </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button 
+          className="btn-danger" 
+         
+          aria-hidden="true"
+          >
+          Add this Recipe
+          </Button>
+        </Modal.Footer>
+      </Modal>  */}
+{/* End Small Header  */}
 
   <div className="w-100 rounded-5 py-4 px-5 mb-4 bg-secondary-subtle d-flex justify-content-between align-items-center" >
     <h6>Item Name</h6>

@@ -21,6 +21,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
+import RecipeForm from './modules/recipes/components/RecipeForm/RecipeForm';
 
 
 function App() {
@@ -68,9 +69,11 @@ function App() {
       errorElement: <NotFound/>,
       children:[
         {index: true ,element: <Dashboard loginData={loginData}/>},
-        {path: 'recipes' ,element: <RecipesList/>},
+        {path: 'recipes' ,element: <RecipesList loginData={loginData}/>},
         {path: 'recipe-data' ,element:<RecipeData/>},
-        {path: 'categories' ,element:<CategoriesList/>},
+        {path: 'recipes/new-recipe' ,element:<RecipeForm/>},
+        {path: 'recipes/:recipeId' ,element:<RecipeForm/>},
+        {path: 'categories' ,element:<CategoriesList loginData={loginData}/>},
         {path: 'category-data' ,element:<CategoryData/>},
         {path: 'users' ,element:<UserList/>},
       ]

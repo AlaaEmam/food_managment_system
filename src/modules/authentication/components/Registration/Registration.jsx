@@ -3,12 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import './Registration.css';
+import defaultAvatar from '../../../../assets/defaultavatar.jpg'
 
 export default function ForgetPass() {
   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [showPassword, setShowPassword] = useState(false);
+  const [profileImage, setProfileImage] = useState(defaultAvatar);
+
 
   const onSubmit = async (data) => {
     try {
@@ -22,6 +26,11 @@ export default function ForgetPass() {
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleProfileImageChange = (e) => {
+    const file = e.target.files[0];
+    setProfileImage(URL.createObjectURL(file));
   };
 
   return (
@@ -39,6 +48,26 @@ export default function ForgetPass() {
               </div>
 
               <form onSubmit={handleSubmit(onSubmit)} className="form-inputs col-lg-12 col-sm-12">
+              {/* Handel Image  */}
+              <div className="profile-image">
+                  <img src={profileImage} alt="Profile Image" className="profile-image-preview" />
+                  <input
+                    type="file"
+                    id="profileImageInput"
+                    className="input-img bg-transparent"
+                    placeholder="Upload Profile Image"
+                    aria-label="Profile Image"
+                    {...register('profileImage')}
+                    onChange={handleProfileImageChange}
+                  />
+              <label htmlFor="profileImageInput" className="icon-profile">
+                <i className="fa-solid fa-camera"></i>
+              </label>
+                </div>
+                <div className='mb-3'>
+                  {errors.profileImage && <span className='text-danger'>{errors.profileImage.message}</span>}
+                </div>
+                
                 <div className="row mb-3 g-3"> 
                   {/* First Column */}
                   <div className='col-md-12 col-lg-6'>

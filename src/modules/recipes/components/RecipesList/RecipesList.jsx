@@ -88,31 +88,9 @@ const imageBaseURL = 'https://upskilling-egypt.com:3006'; // Set the base URL
               <p className='fw-light'>You can check all details</p>
             </div>
             <div className='end-0'>
-            <button className=' btn btn-success p-3 mt-4 mb-4' onClick={handleShowAdd} >Add New Recipes</button>
+            <Link to="new-recipe" className=' btn btn-success p-3 mt-4 mb-4' onClick={handleShowAdd} >Add New Recipes</Link>
             </div>
   </div>
-   {/* <Modal show={showAdd} onHide={handleCloseAdd}>
-        <Modal.Header >
-        <img src={closeButton} onClick={handleCloseAdd} alt="" />
-        </Modal.Header>
-        <Modal.Body>
-         <div className="text-center">
-         <img src={character} alt="" />
-          <h5 className='mt-4'>Add This Recipe </h5>
-          <p className='text-muted'>are you sure you want to Add this item ? if you are sure just click on Add it</p>  
-         </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button 
-          className="btn-danger" 
-         
-          aria-hidden="true"
-          >
-          Add this Recipe
-          </Button>
-        </Modal.Footer>
-      </Modal>  */}
-{/* End Small Header  */}
 
   <div className="w-100 rounded-5 py-4 px-5 mb-4 bg-secondary-subtle d-flex justify-content-between align-items-center" >
     <h6>Item Name</h6>
@@ -157,9 +135,9 @@ const imageBaseURL = 'https://upskilling-egypt.com:3006'; // Set the base URL
           <i className="fa-solid fa-ellipsis text-success"></i>
           </div>
           <ul className="dropdown-menu">
-            <li><Link className="dropdown-item"  onClick={handleShowDelete}  href="#"><img src={View} alt="" />View</Link></li>
-            <li><Link className="dropdown-item"  onClick={handleShowDelete} href="#"><img src={Edit} alt="" />Edit</Link></li>
-            <li><Link className="dropdown-item"  onClick={()=> handleShowDelete(recipe.id)} href="#"><img src={Delete} alt="" />Delete</Link></li>
+            <li><Link className="dropdown-item"  onClick={handleShowDelete}><img src={View} alt="" />View</Link></li>
+            <li><Link className="dropdown-item"  onClick={handleShowDelete} to={`/recipes/${recipe?.id}`} ><img src={Edit} alt="" />Edit</Link></li>
+            <li><Link className="dropdown-item"  onClick={()=> handleShowDelete(recipe.id)} ><img src={Delete} alt="" />Delete</Link></li>
           </ul>
         </div>
         </td>

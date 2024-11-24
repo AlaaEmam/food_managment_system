@@ -116,6 +116,15 @@ export default function RecipeForm() {
         }
     }, [recipeId ,setValue]);
 
+    // Handel Reload and Close browser
+    useEffect(()=>{
+        const beforeUnloadHandler =(e) => {
+            e.preventDefault();
+        };
+        window.addEventListener("beforeunload", beforeUnloadHandler);
+        // return() =>
+        //     window.removeEventListener("beforeunload" , beforeUnloadHandler);
+    },[]);
 
     const onDrop = (event) => {
         event.preventDefault();

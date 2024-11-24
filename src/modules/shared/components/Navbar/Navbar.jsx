@@ -3,9 +3,7 @@ import './Navbar.modules.css';
 import avatar from '../../../../assets/avatar.png';
 
 
-
-
-export default function Navbar({loginData}) {
+export default function Navbar({loginData ,profileImage}) {
 
   const [searchText, setSearchText] = useState('');
 
@@ -35,7 +33,7 @@ export default function Navbar({loginData}) {
         </div>
         <div className="navbar-nav ">
           <div className="nav-item mx-5 d-flex align-items-center ">
-             <img className="avatar" src={avatar} alt="user avatar" />
+             <img className="avatar" src={profileImage || avatar} alt="user avatar" />
               <span className="navbar-text mx-2  fw-bold ">{loginData?.userName}</span>
           </div>
          

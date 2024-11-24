@@ -2,9 +2,10 @@ import { Sidebar, Menu, MenuItem } from 'react-pro-sidebar';
 import { Link } from 'react-router-dom';
 import ExpandedLogo from '../../../../assets/logo_sidebar.png'
 import CollapsedLogo from '../../../../assets/collapselogo.png'
-import './SideBar.modules.css';
 import { useState } from 'react';
-export default function SideBar() {
+import './LeftSideBar.css';
+
+export default function LeftSideBar() {
 
   const [isCollapse ,setIsCollapse] =useState(false);
   let toggleCollapse = () => {
@@ -14,7 +15,7 @@ export default function SideBar() {
 
   return (
   <>
-  <div className="sidebar-container">
+
   <Sidebar collapsed={isCollapse}>
       <Menu>
         <MenuItem
@@ -64,7 +65,6 @@ export default function SideBar() {
         </MenuItem>
   
       </Menu>
-    </Sidebar>
-  </div>  
+    </Sidebar> 
 </>
 )}

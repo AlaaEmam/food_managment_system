@@ -20,8 +20,11 @@ export default function Dashboard({ loginData }) {
         <p className='fw-light'>you can now fill the meals easily using the table and form , click here and sill it with the table !</p>
       </div>
       <div className='end-0'>
-      <Link to='/dashboard/recipes' >
-      <button className=' btn btn-success  p-2 mt-4 mb-2 tex'>Fill Recipes<i className="fa-solid fa-arrow-right px-2"></i> </button>
+      <Link to='recipes/new-recipe' >
+      <button className='btn btn-success py-2 px-3"'>
+        Fill Recipes
+        <i className="fa-solid fa-arrow-right px-1"></i> 
+        </button>
       </Link>
       </div>
   </div>

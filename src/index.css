@@ -60,7 +60,7 @@
 .icon-showpass {
     padding-left: 10px; 
 }
-
+/* HEADER */
 .header-container{
     margin: 32px 0 10px 0px;
     background-image: url(./assets/header.png);
@@ -69,24 +69,19 @@
     background-size: cover;
 }
 
+/* DASHBOARD */
 .dashboard-container{
     background-color: #F0FFEF;
     border-radius: 15px;
 }
-
-.dashboard-container button{
-
+/* .dashboard-container button{
     width: 223px;
     height: 48px;
     left: 1155px;
     top: 523px;
-
     background: #009247;
     border-radius: 8px;
-
-}
-
+} */
 .table>thead{
-    --bs-table-bg: #E2E5EB 
-    ;
+    --bs-table-bg: #E2E5EB;
 }

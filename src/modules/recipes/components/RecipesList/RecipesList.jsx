@@ -88,7 +88,9 @@ const imageBaseURL = 'https://upskilling-egypt.com:3006'; // Set the base URL
               <p className='fw-light'>You can check all details</p>
             </div>
             <div className='end-0'>
-            <Link to="new-recipe" className=' btn btn-success p-3 mt-4 mb-4' onClick={handleShowAdd} >Add New Recipes</Link>
+            <Link to='new-recipe' >
+            <button className=' btn btn-success p-3 mt-4 mb-4' >Add New Recipe </button>
+            </Link>
             </div>
   </div>
 
@@ -136,7 +138,7 @@ const imageBaseURL = 'https://upskilling-egypt.com:3006'; // Set the base URL
           </div>
           <ul className="dropdown-menu">
             <li><Link className="dropdown-item"  onClick={handleShowDelete}><img src={View} alt="" />View</Link></li>
-            <li><Link className="dropdown-item"  onClick={handleShowDelete} to={`/recipes/${recipe?.id}`} ><img src={Edit} alt="" />Edit</Link></li>
+            <li><Link className="dropdown-item"  onClick={handleShowDelete} to={`${recipe?.id}`} ><img src={Edit} alt="" />Edit</Link></li>
             <li><Link className="dropdown-item"  onClick={()=> handleShowDelete(recipe.id)} ><img src={Delete} alt="" />Delete</Link></li>
           </ul>
         </div>

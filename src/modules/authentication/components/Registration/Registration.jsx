@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import './Registration.css';
 import defaultAvatar from '../../../../assets/defaultavatar.jpg'
 
-export default function ForgetPass() {
+export default function Registration() {
   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [showPassword, setShowPassword] = useState(false);
@@ -27,10 +27,11 @@ export default function ForgetPass() {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-
   const handleProfileImageChange = (e) => {
     const file = e.target.files[0];
-    setProfileImage(URL.createObjectURL(file));
+    if (file) {
+      setProfileImage(URL.createObjectURL(file)); // Create a URL for the uploaded image
+    }
   };
 
   return (

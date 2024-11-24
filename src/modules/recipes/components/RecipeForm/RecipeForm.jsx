@@ -7,9 +7,11 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import './RecipeForm.css';
+import { FloatingLabel } from 'react-bootstrap';
+
 
 export default function RecipeForm() {
-    const { register, handleSubmit, formState: { isSubmitting, errors }, setError } = useForm({ mode: "onChange" });
+    const { register, handleSubmit, formState: { isSubmitting, errors }, setError , setValue } = useForm({ mode: "onChange" });
     const [tags, setTags] = useState([]);
     const [file, setFile] = useState(null); // State to hold the selected file
     const [categoriesList, setCategoriesList] = useState([]);
@@ -18,6 +20,7 @@ export default function RecipeForm() {
     const [uploadSuccess, setUploadSuccess] = useState(false); // State for upload success message
     const navigate = useNavigate();
     const params = useParams();
+    const recipeId = params.recipeId;
 
     const onSubmitHandler = async (data) => {
         const formData = new FormData();
@@ -33,19 +36,36 @@ export default function RecipeForm() {
         });
 
         try {
-            const response = await axios.post(`https://upskilling-egypt.com:3006/api/v1/Recipe/`, formData, {
-                headers: { 
-                    'Content-Type': 'multipart/form-data',
-                    Authorization: localStorage.getItem("token") 
-                }
-            });
-            toast.success("Recipe saved successfully!");
+            let response;
+            if (recipeId !== "new-recipe") {
+                // Update existing recipe
+                response = await axios.put(`https://upskilling-egypt.com:3006/api/v1/Recipe/${recipeId}`, formData, {
+                    headers: { 
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: localStorage.getItem("token") 
+                    }
+                });
+                toast.success("Recipe updated successfully!");
+            } else {
+                // Create new recipe
+                response = await axios.post(`https://upskilling-egypt.com:3006/api/v1/Recipe/`, formData, {
+                    headers: { 
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: localStorage.getItem("token") 
+                    }
+                });
+                toast.success("Recipe saved successfully!");
+            }
             navigate('/dashboard/recipes');
+            console.log(response);
+            
+            
         } catch (error) {
             console.error(error);
             toast.error(error.message || 'An error occurred');
         }
     };
+
 
     // Fetch Categories List
     const getCategoriesList = async () => {
@@ -70,9 +90,32 @@ export default function RecipeForm() {
                 toast.error('Failed to fetch tags');
             }
         };
-        getTags();
-        getCategoriesList();
-    }, []);
+        // Edit Recipe Data
+        if (recipeId !== "new-recipe") {
+            const getRecipe = async () => {
+                try {
+                    const response = await axios.get(`https://upskilling-egypt.com:3006/api/v1/Recipe/${recipeId}`);
+                    console.log(response);
+                    // Handle the recipe data Set values we Have
+                    const recipe = response?.data;
+
+                    setValue("name" , recipe?.name);
+                    setValue("price" , recipe?.price);
+                    setValue("tagId" , recipe?.tag?.id);
+                    setValue("categoriesIds" , recipe?.category?.[0].id);
+                    setValue("description" , recipe?.description);
+                  
+
+                } catch (error) {
+                    console.error("Failed to fetch recipe:", error);
+                }
+            };
+            getRecipe();
+            getTags();
+            getCategoriesList();    
+        }
+    }, [recipeId ,setValue]);
+
 
     const onDrop = (event) => {
         event.preventDefault();
@@ -119,18 +162,21 @@ export default function RecipeForm() {
             {/* Form  */}
             <Form onSubmit={handleSubmit(onSubmitHandler)} className='px-5 py-3 mb-3'>
                 <Form.Group className="mb-3" controlId="formGridName">
+                <FloatingLabel controlId="floatingName" label="Recipe Name">
                     <Form.Control 
                         placeholder="Recipe Name" 
                         type="text" 
                         aria-label="name" 
                         {...register("name", { required: 'Recipe Name is required.' })} 
                     />
+                </FloatingLabel>
                     <div className='my-1'>
                         {errors?.name && <span className='text-danger'>{errors.name.message}</span>}
                     </div>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formGridPrice">
+                <FloatingLabel controlId="floatingPrice" label="Price">
                     <Form.Control 
                         placeholder="Price" 
                         type="number" 
@@ -138,48 +184,60 @@ export default function RecipeForm() {
                         aria-label="price" 
                         {...register("price", { required: 'Price is required.' })} 
                     />
+                </FloatingLabel>
                     <div className='my-1'>
                         {errors?.price && <span className='text-danger'>{errors.price.message}</span>}
                     </div>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formGridTag">
+                <FloatingLabel
+                     controlId="floatingSelectGrid"
+                     label="Tags">
+
                     <Form.Select 
                         aria-label="Tag" 
                         {...register("tagId", { required: 'Tag Name is required.' })} 
                     >
-                        <option>Tags</option>
+                        <option>Choose Tags...</option>
                         {tags.map(({ id, name }) => (
                             <option key={id} value={id}>{name}</option>
                         ))}
                     </Form.Select>
+                    </FloatingLabel>
                     <div className='my-1'>
                         {errors?.tagId && <span className='text-danger'>{errors.tagId.message}</span>}
                     </div>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formGridCategories">
+                    <FloatingLabel
+                     controlId="floatingSelectGrid"
+                     label="Categories">
                     <Form.Select 
                         aria-label="categoriesIds" 
                         {...register("categoriesIds", { required: 'Categories are required.' })} 
                     >
-                        <option>Categories</option>
+                        <option>Choose Categories...</option>
                         {categoriesList.map(({ id, name }) => (
                             <option key={id} value={id}>{name}</option>
                         ))}
                     </Form.Select>
+                    </FloatingLabel>
                     <div className='my-1'>
                         {errors.categoriesIds?.message && <span className='text-danger'>{errors.categoriesIds.message}</span>}
                     </div>
                 </Form.Group>
 
                 <div className='mb-3'>
+                <FloatingLabel controlId="floatingDescription" label="Description">
                     <Form.Control 
                         className="mb-1" 
                         as="textarea" 
                         placeholder="Description" 
                         {...register("description", { required: 'Description is required.' })} 
                     />
+                    </FloatingLabel>
                     {errors.description?.message && <span className='text-danger'>{errors.description.message}</span>}
                 </div>
 

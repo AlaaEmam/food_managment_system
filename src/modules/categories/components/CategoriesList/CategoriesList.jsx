@@ -116,6 +116,7 @@ export default function CategoriesList() {
     setShowDelete(true);
   };
 
+  //Modal View
   const handleCloseView = () => setShowView(false);
   const handleShowView = (category) => {
     setSelectedCategory(category);

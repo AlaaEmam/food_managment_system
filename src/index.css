@@ -74,14 +74,15 @@
     background-color: #F0FFEF;
     border-radius: 15px;
 }
-/* .dashboard-container button{
-    width: 223px;
-    height: 48px;
-    left: 1155px;
-    top: 523px;
-    background: #009247;
-    border-radius: 8px;
-} */
+
 .table>thead{
     --bs-table-bg: #E2E5EB;
+}
+.pagination{
+    --bs-pagination-focus-box-shadow: 0 0 0 0.25rem #75b79852;
+    --bs-pagination-color: #198754;
+    --bs-pagination-active-bg: #75b798;
+    --bs-pagination-active-border-color: #198754;
+    --bs-pagination-hover-color: #00ff37;
+
 }

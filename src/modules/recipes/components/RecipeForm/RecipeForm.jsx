@@ -151,8 +151,7 @@ export default function RecipeForm() {
 
     return (
         <>
-            <div>recipe id: {params.recipeId}</div>
-
+            {/* <div>recipe id: {params.recipeId}</div> */}
             <div className='dashboard-container py-4 px-4 d-flex justify-content-between position-relative align-items-center'>
                 <div className='caption'>
                     <h3 className='fw-bold'>Fill the <span className='fw-normal text-success'>Recipes</span>!</h3>

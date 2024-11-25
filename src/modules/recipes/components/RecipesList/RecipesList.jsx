@@ -2,7 +2,6 @@
 import Header from '../../../shared/components/Header/Header'
 import avatar from '../../../../assets/userlist.png'
 import axios from 'axios'
-// import SmallHeader from '../../../shared/components/SmallHeader/SmallHeader'
 import Table from 'react-bootstrap/Table'
 import View from '../../../../assets/View.png'
 import Edit from '../../../../assets/Edit.png'
@@ -12,7 +11,7 @@ import { toast } from 'react-toastify';
 import DeleteConfirmation from '../../../shared/components/DeleteConfirmation/DeleteConfirmation'
 import NoData from './../../../shared/components/NoData/NoData';
 import NoImage from '../../../../assets/noimg.jpg';
-import { Modal } from 'react-bootstrap'
+
 export default function RecipesList() {
   const [recipesList ,setRecipesList]= useState([]);
   const [selectedId ,setSelectedId] = useState(0);
@@ -28,7 +27,8 @@ export default function RecipesList() {
     }catch(error){
      console.log(error);
     }
-  }
+  };
+
   //Handle delete 
   let deleteRecipe = () =>{
     try{
@@ -60,16 +60,6 @@ const imageBaseURL = 'https://upskilling-egypt.com:3006'; // Set the base URL
     setSelectedId(id);
     setShowDelete(true);
   };
-  //Handle Modal Add
-  const [showAdd, setShowAdd] = useState(false);
-  const handleCloseAdd = () => setShowAdd(false);
-  const handleShowAdd = (id) => {
-    setSelectedId(id);
-    setShowAdd(true);
-  };
-
-  
-  
 
   return (
   <>
@@ -137,8 +127,8 @@ const imageBaseURL = 'https://upskilling-egypt.com:3006'; // Set the base URL
           <i className="fa-solid fa-ellipsis text-success"></i>
           </div>
           <ul className="dropdown-menu">
-            <li><Link className="dropdown-item"  onClick={handleShowDelete}><img src={View} alt="" />View</Link></li>
-            <li><Link className="dropdown-item"  onClick={handleShowDelete} to={`${recipe?.id}`} ><img src={Edit} alt="" />Edit</Link></li>
+            <li><Link className="dropdown-item" ><img src={View} alt="" />View</Link></li>
+            <li><Link className="dropdown-item" to={`${recipe?.id}`} ><img src={Edit} alt="" />Edit</Link></li>
             <li><Link className="dropdown-item"  onClick={()=> handleShowDelete(recipe.id)} ><img src={Delete} alt="" />Delete</Link></li>
           </ul>
         </div>

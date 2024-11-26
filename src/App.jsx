@@ -9,9 +9,7 @@ import NotFound from './modules/shared/components/NotFound/NotFound';
 import MasterLayout from './modules/shared/components/MasterLayout/MasterLayout';
 import Dashboard from './modules/dashboard/components/Dashboard/Dashboard';
 import RecipesList from './modules/recipes/components/RecipesList/RecipesList';
-import RecipeData from './modules/recipes/components/RecipeData/RecipeData';
 import CategoriesList from './modules/categories/components/CategoriesList/CategoriesList';
-import CategoryData from './modules/categories/components/CategoryData/CategoryData';
 import UserList from './modules/users/components/UserList/UserList';
 import VerificationRegister from './modules/authentication/components/VerificationRegister/VerificationRegister';
 import ProtectedRoute from './modules/shared/components/ProtectedRoute/ProtectedRoute';
@@ -70,11 +68,9 @@ function App() {
       children:[
         {index: true ,element: <Dashboard loginData={loginData}/>},
         {path: 'recipes' ,element: <RecipesList loginData={loginData}/>},
-        {path: 'recipe-data' ,element:<RecipeData/>},
         {path: 'recipes/new-recipe' ,element:<RecipeForm loginData={loginData}/>},
         {path: 'recipes/:recipeId' ,element:<RecipeForm loginData={loginData}/>},
         {path: 'categories' ,element:<CategoriesList loginData={loginData}/>},
-        {path: 'category-data' ,element:<CategoryData/>},
         {path: 'users' ,element:<UserList/>},
       ]
     }

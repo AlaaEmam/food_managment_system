@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 import DeleteConfirmation from '../../../shared/components/DeleteConfirmation/DeleteConfirmation'
 import NoData from './../../../shared/components/NoData/NoData';
 import NoImage from '../../../../assets/noimg.jpg';
+import Pagination from '../../../shared/components/Pagination/Pagination'
 
 export default function RecipesList() {
    // imageURL
@@ -21,7 +22,7 @@ export default function RecipesList() {
   const [categoriesList, setCategoriesList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const [arrayOfPages, setArrayOfPages] = useState([]);
+  // const [arrayOfPages, setArrayOfPages] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [showView, setShowView] = useState(false);
   const [nameValue, setNameValue] = useState('');
@@ -44,9 +45,10 @@ export default function RecipesList() {
       );
       console.log(response.data.data);
       setRecipesList(response.data.data);
-      setArrayOfPages(Array.from( { 
-        length: Math.min(3, response.data.totalNumberOfPages) }, 
-        (_, i) => i + 1));
+      setTotalPages(response.data.totalNumberOfPages);
+      // setArrayOfPages(Array.from( { 
+      //   length: Math.min(3, response.data.totalNumberOfPages) }, 
+      //   (_, i) => i + 1));
 
     }catch(error){
      console.log(error);
@@ -117,7 +119,7 @@ export default function RecipesList() {
   };
 
 
-  //Hnadel Fillter by tag & category
+  //Handel Filter by tag & category
   const getCategoryValue = (input) => {
   setCatValue(input.target.value);
   getRecipesList( 1 , 3 , nameValue , tagValue , input.target.value  );
@@ -135,15 +137,16 @@ export default function RecipesList() {
     setShowView(true);
   };
 
+
+  // Handel Pagination
   useEffect(() => {
-    getRecipesList(currentPage);
+    getRecipesList(currentPage, 3);
   }, [currentPage]);
 
-  const handlePageClick = (pageNo) => {
+  const handlePageChange = (pageNo) => {
     setCurrentPage(pageNo);
-    getRecipesList(pageNo);
+    getRecipesList(pageNo, 3);
   };
-
 
   return (
   <>
@@ -256,28 +259,14 @@ export default function RecipesList() {
   </Table> : <NoData/> }
 
 
-  {/* Pagination */}
-  <nav aria-label="Page navigation example">
-        <ul className="pagination">
-          <li className="page-item">
-            <Link className="page-link" onClick={() => handlePageClick(currentPage > 1 ? currentPage - 1 : 1)} aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </Link>
-          </li>
-          {arrayOfPages.map((pageNo) => (
-            <li className={`page-item ${currentPage === pageNo ? 'active' : ''}`} key={pageNo}>
-              <Link className="page-link" onClick={() => handlePageClick(pageNo)}>
-                {pageNo}
-              </Link>
-            </li>
-          ))}
-          <li className="page-item">
-            <Link className="page-link" onClick={() => handlePageClick(currentPage < totalPages ? currentPage + 1 : totalPages)} aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </Link>
-          </li>
-        </ul>
-      </nav>
+ 
+   {/* Pagination Component */}
+   <Pagination 
+        currentPage={currentPage} 
+        totalPages={totalPages} 
+        onPageChange={handlePageChange} 
+      />
+  
   </>
   )
 }

@@ -14,12 +14,12 @@ import Modal from 'react-bootstrap/Modal';
 import closeButton from '../../../../assets/closeButton.png';
 
 export default function UserList() {
-  const [userList ,setUserList]= useState([]);
   const imageBaseURL = 'https://upskilling-egypt.com:3006/'; // Set the base URL
+  const [userList ,setUserList]= useState([]);
+  const [selectedId ,setSelectedId] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [arrayOfPages, setArrayOfPages] = useState([]);
-  const [selectedId ,setSelectedId] = useState(0);
   const [selectedUser, setSelectedUser] = useState(null);
   const [showView, setShowView] = useState(false);
 
@@ -28,7 +28,7 @@ export default function UserList() {
       let response = await axios.get(`https://upskilling-egypt.com:3006/api/v1/Users/`,
         {
           headers: {Authorization:localStorage.getItem("token")},
-          params: {pageSize : 10 , pageNumber: pageNo}
+          params: {pageSize : 5 , pageNumber: pageNo}
         });
       console.log(response.data.data);
       setUserList(response.data.data);
@@ -144,7 +144,7 @@ export default function UserList() {
     <h6>email</h6>
     <h6>phoneNumber</h6>
     <h6>country</h6>
-    <h6>imagePath</h6>
+    <h6>Profile Picture</h6>
    
     <h6>Action</h6>
   </div>
@@ -194,7 +194,7 @@ export default function UserList() {
     </tbody>
   </Table> : <NoData/> } 
 
-
+{/* Pagination */}
       <nav aria-label="Page navigation example">
         <ul className="pagination">
           <li className="page-item">

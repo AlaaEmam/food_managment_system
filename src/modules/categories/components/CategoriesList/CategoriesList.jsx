@@ -218,7 +218,9 @@ export default function CategoriesList() {
       />
 
       <div className="w-100 rounded-5 py-4 px-5 mb-4 bg-secondary-subtle d-flex justify-content-between align-items-center">
+        <h6>ID</h6>
         <h6>Name</h6>
+        <h6>Creation Date</h6>
         <h6>Actions</h6>
       </div>
 

@@ -15,8 +15,8 @@ export default function Navbar({loginData ,profileImage}) {
   return (
     <>
     <nav className="navbar navbar-expand-lg">
-      <div className="container-fluid">
-        <div className="mr-auto ">
+      <div className="container-fluid row ">
+        <div className="mr-auto col-md-6 ">
             <div className="input-group mb-1 rounded-pill">
                     <span className="input-group-text search-icon">
                      <i className="fas fa-search"></i>
@@ -31,19 +31,20 @@ export default function Navbar({loginData ,profileImage}) {
                     />
             </div>
         </div>
-        <div className="navbar-nav ">
-          <div className="nav-item mx-5 d-flex align-items-center ">
-             <img className="avatar" src={profileImage || avatar} alt="user avatar" />
-              <span className="navbar-text mx-2  fw-bold ">{loginData?.userName}</span>
-          </div>
-         
-          <div  className="av-item d-flex align-items-center position-relative">
-          <i className="fas fa-bell"></i>
-           <span className="position-absolute top-1 start-1 translate-middle badge border border-light rounded-circle bg-danger p-1">
-            <span className="visually-hidden">unread messages</span></span>
-          </div>
-
+    
+      <div className="mr-auto col-md-6  d-flex justify-content-end align-items-center">
+      <div className=" nav-item mx-5">
+            <img className="avatar" src={profileImage || avatar} alt="user avatar" />
+            <span className="navbar-text mx-2  fw-bold ">{loginData?.userName}</span>
         </div>
+        
+        <div  className=" nav-item position-relative">
+        <i className="fas fa-bell"></i>
+          <span className="position-absolute top-1 start-1 translate-middle badge border border-light rounded-circle bg-danger p-1">
+          <span className="visually-hidden">unread messages</span></span>
+        </div>
+      </div>
+
       </div>
     </nav>
     </>

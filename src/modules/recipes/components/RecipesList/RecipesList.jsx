@@ -22,14 +22,13 @@ export default function RecipesList() {
   const [categoriesList, setCategoriesList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  // const [arrayOfPages, setArrayOfPages] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [showView, setShowView] = useState(false);
   const [nameValue, setNameValue] = useState('');
   const [tagValue, setTagValue] = useState('');
   const [catValue, setCatValue] = useState('');
 
-  let getRecipesList = async(pageNo ,pageSize ,name ,tag ,category) => {
+  let getRecipesList= async(pageNo ,pageSize ,name ,tag ,category) => {
     try{
       let response = await axios.get(`https://upskilling-egypt.com:3006/api/v1/Recipe/`,
         {
@@ -46,10 +45,6 @@ export default function RecipesList() {
       console.log(response.data.data);
       setRecipesList(response.data.data);
       setTotalPages(response.data.totalNumberOfPages);
-      // setArrayOfPages(Array.from( { 
-      //   length: Math.min(3, response.data.totalNumberOfPages) }, 
-      //   (_, i) => i + 1));
-
     }catch(error){
      console.log(error);
     }
@@ -139,6 +134,7 @@ export default function RecipesList() {
 
 
   // Handel Pagination
+  
   useEffect(() => {
     getRecipesList(currentPage, 3);
   }, [currentPage]);

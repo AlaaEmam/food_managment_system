@@ -13,6 +13,7 @@ import DeleteConfirmation from '../../../shared/components/DeleteConfirmation/De
 import NoData from './../../../shared/components/NoData/NoData';
 import closeButton from '../../../../assets/closeButton.png';
 import { useForm } from 'react-hook-form';
+import Pagination from '../../../shared/components/Pagination/Pagination';
 
 export default function CategoriesList() {
   const { register, handleSubmit, setValue, formState: { errors } } = useForm();
@@ -24,6 +25,9 @@ export default function CategoriesList() {
   const [showDelete, setShowDelete] = useState(false);
   const [showView, setShowView] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+
 
   // Handle Add Data
   const onSubmitAdd = async (data) => {
@@ -31,7 +35,7 @@ export default function CategoriesList() {
       await axios.post(`https://upskilling-egypt.com:3006/api/v1/Category/`, data, {
         headers: { Authorization: localStorage.getItem("token") }
       });
-      getCategoriesList();
+      getCategoriesList(currentPage, 3);
       handleCloseAdd();
       toast.success("Category added successfully!");
     } catch (error) {
@@ -52,7 +56,7 @@ export default function CategoriesList() {
       await axios.put(`https://upskilling-egypt.com:3006/api/v1/Category/${selectedId}`, data, {
         headers: { Authorization: token }
       });
-      getCategoriesList();
+      getCategoriesList(currentPage, 3);
       handleCloseUpdate();
       toast.success("Category updated successfully!");
     } catch (error) {
@@ -62,12 +66,17 @@ export default function CategoriesList() {
   };
 
   // Fetch Categories List
-  const getCategoriesList = async () => {
+  const getCategoriesList = async (pageNo, pageSize) => {
     try {
-      const response = await axios.get(`https://upskilling-egypt.com:3006/api/v1/Category/?pageSize=10&pageNumber=1`, {
+      const response = await axios.get(`https://upskilling-egypt.com:3006/api/v1/Category/`, {
         headers: { Authorization: localStorage.getItem("token") },
+        params: {
+          pageSize: pageSize,
+          pageNumber: pageNo,
+        }
       });
       setCategoriesList(response.data.data);
+      setTotalPages(response.data.totalNumberOfPages); 
     } catch (error) {
       console.error(error);
       toast.error("Failed to fetch categories. Please check your authentication.");
@@ -86,7 +95,7 @@ export default function CategoriesList() {
       await axios.delete(`https://upskilling-egypt.com:3006/api/v1/Category/${selectedId}`, {
         headers: { Authorization: token },
       });
-      getCategoriesList();
+      getCategoriesList(currentPage, 3);
       toast.success("Category deleted successfully!");
     } catch (error) {
       console.error(error);
@@ -94,11 +103,7 @@ export default function CategoriesList() {
     }
     handleCloseDelete();
   };
-
-  useEffect(() => {
-    getCategoriesList();
-  }, []);
-
+  
   // Modal Handlers
   const handleCloseAdd = () => setShowAdd(false);
   const handleShowAdd = () => setShowAdd(true);
@@ -123,6 +128,16 @@ export default function CategoriesList() {
     setShowView(true);
   };
 
+  // Handel Pagination
+  useEffect(() => {
+    getCategoriesList(currentPage, 3); 
+  }, [currentPage]);
+
+  const handlePageChange = (pageNo) => {
+    setCurrentPage(pageNo);
+    getCategoriesList(pageNo, 3);
+  };
+  
   return (
     <> 
       <Header 
@@ -224,7 +239,6 @@ export default function CategoriesList() {
         <h6>Actions</h6>
       </div>
 
-      <div>
         {categoriesList.length > 0 ? 
           <Table striped borderless hover>
             <tbody>
@@ -250,7 +264,15 @@ export default function CategoriesList() {
             </tbody>
           </Table>
         : <NoData/> }
-      </div>
+
+        
+  {/* Pagination Component */}
+   <Pagination 
+        currentPage={currentPage} 
+        totalPages={totalPages} 
+        onPageChange={handlePageChange} 
+      />
+    
     </>
   )
 }

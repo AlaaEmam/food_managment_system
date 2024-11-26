@@ -12,30 +12,29 @@ import NoData from './../../../shared/components/NoData/NoData';
 import NoUserImage from '../../../../assets/defaultavatar.jpg';
 import Modal from 'react-bootstrap/Modal';
 import closeButton from '../../../../assets/closeButton.png';
+import Pagination from '../../../shared/components/Pagination/Pagination'
 
 export default function UserList() {
   const imageBaseURL = 'https://upskilling-egypt.com:3006/'; // Set the base URL
   const [userList ,setUserList]= useState([]);
   const [selectedId ,setSelectedId] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
-  const [arrayOfPages, setArrayOfPages] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [showView, setShowView] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
 
-  let getUserList = async(pageNo , PageSize) => {
+  let getUserList = async(pageNo ,pageSize ) => {
     try{
       let response = await axios.get(`https://upskilling-egypt.com:3006/api/v1/Users/`,
         {
           headers: {Authorization:localStorage.getItem("token")},
-          params: {pageSize : 5 , pageNumber: pageNo}
+          params: {
+            pageSize: pageSize , 
+            pageNumber: pageNo , 
+          }
         });
-      console.log(response.data.data);
       setUserList(response.data.data);
-      setArrayOfPages(Array.from( { 
-        length: Math.min(5, response.data.totalNumberOfPages) }, 
-        (_, i) => i + 1));
-
+      setTotalPages(response.data.totalNumberOfPages);
     }catch(error){
      console.log(error);
     }
@@ -72,13 +71,15 @@ export default function UserList() {
     setShowView(true);
   };
 
+ 
+  // Handel Pagination
   useEffect(() => {
-    getUserList(currentPage);
+    getUserList(currentPage, 3);
   }, [currentPage]);
 
-  const handlePageClick = (pageNo) => {
+  const handlePageChange = (pageNo) => {
     setCurrentPage(pageNo);
-    getUserList(pageNo);
+    getUserList(pageNo, 3);
   };
 
   return (
@@ -90,7 +91,8 @@ export default function UserList() {
     description={'This is a welcoming screen for the entry of the application, you can now see the options'}
     img={<img src={avatar} alt="User Avatar" />}
     height={"170px"}
-  />
+/>
+
 {/* Small Header  */}
 <div className='d-flex justify-content-between position-relative align-items-center'>
   <div className='caption '>
@@ -100,11 +102,11 @@ export default function UserList() {
 </div>
 
 <DeleteConfirmation 
-    showDelete={showDelete}
-    handleCloseDelete={handleCloseDelete}
-    deleteItem={'User'}
-    deleteFunction={deleteUser}
-    />
+  showDelete={showDelete}
+  handleCloseDelete={handleCloseDelete}
+  deleteItem={'User'}
+  deleteFunction={deleteUser}
+/>
 
   {/* View user Modal */}
   <Modal show={showView} onHide={handleCloseView} centered>
@@ -194,28 +196,13 @@ export default function UserList() {
     </tbody>
   </Table> : <NoData/> } 
 
-{/* Pagination */}
-      <nav aria-label="Page navigation example">
-        <ul className="pagination">
-          <li className="page-item">
-            <Link className="page-link" onClick={() => handlePageClick(currentPage > 1 ? currentPage - 1 : 1)} aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </Link>
-          </li>
-          {arrayOfPages.map((pageNo) => (
-            <li className={`page-item ${currentPage === pageNo ? 'active' : ''}`} key={pageNo}>
-              <Link className="page-link" onClick={() => handlePageClick(pageNo)}>
-                {pageNo}
-              </Link>
-            </li>
-          ))}
-          <li className="page-item">
-            <Link className="page-link" onClick={() => handlePageClick(currentPage < totalPages ? currentPage + 1 : totalPages)} aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </Link>
-          </li>
-        </ul>
-      </nav>
+  {/* Pagination Component */}
+   <Pagination 
+        currentPage={currentPage} 
+        totalPages={totalPages} 
+        onPageChange={handlePageChange} 
+      />
+  
 </>
 
   )

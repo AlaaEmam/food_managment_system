@@ -25,6 +25,7 @@ export default function CategoriesList() {
   const [showDelete, setShowDelete] = useState(false);
   const [showView, setShowView] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [nameValue, setNameValue] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
 
@@ -66,13 +67,14 @@ export default function CategoriesList() {
   };
 
   // Fetch Categories List
-  const getCategoriesList = async (pageNo, pageSize) => {
+  const getCategoriesList = async (pageNo, pageSize, name) => {
     try {
       const response = await axios.get(`https://upskilling-egypt.com:3006/api/v1/Category/`, {
         headers: { Authorization: localStorage.getItem("token") },
         params: {
           pageSize: pageSize,
           pageNumber: pageNo,
+          name: name,
         }
       });
       setCategoriesList(response.data.data);
@@ -128,9 +130,16 @@ export default function CategoriesList() {
     setShowView(true);
   };
 
+  // Handel Search input
+  const getnameValue = (input) => {
+  setNameValue(input.target.value);
+  getCategoriesList( 1 , 5 , input.target.value);
+  };
+  
+
   // Handel Pagination
   useEffect(() => {
-    getCategoriesList(currentPage, 3); 
+    getCategoriesList(currentPage, 3 ,nameValue); 
   }, [currentPage]);
 
   const handlePageChange = (pageNo) => {
@@ -232,6 +241,18 @@ export default function CategoriesList() {
         deleteFunction={deleteCategory}
       />
 
+      {/* Fillter & Search  */}
+      <div className="mb-4 d-flex">
+        <div className="search-bar col-md m-1">
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Search here..."
+          onChange={getnameValue}
+        />
+      </div>
+      </div>
+
       <div className="w-100 rounded-5 py-4 px-5 mb-4 bg-secondary-subtle d-flex justify-content-between align-items-center">
         <h6>ID</h6>
         <h6>Name</h6>
@@ -240,14 +261,14 @@ export default function CategoriesList() {
       </div>
 
         {categoriesList.length > 0 ? 
-          <Table striped borderless hover>
+          <Table striped borderless hover >
             <tbody>
               {categoriesList.map((category) => (
                 <tr key={category.id}>
-                  <td>{category.id}</td>
-                  <td>{category.name}</td>
-                  <td>{category.creationDate}</td>
-                  <td>
+                  <td className='p-4'>{category.id}</td>
+                  <td className='p-4'>{category.name}</td>
+                  <td className='p-4'>{category.creationDate}</td>
+                  <td className='p-4'>
                     <div className="dropdown">
                       <div type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i className="fa-solid fa-ellipsis text-success"></i>

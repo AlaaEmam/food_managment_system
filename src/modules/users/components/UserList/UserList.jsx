@@ -20,23 +20,33 @@ export default function UserList() {
   const [selectedId ,setSelectedId] = useState(0);
   const [selectedUser, setSelectedUser] = useState(null);
   const [showView, setShowView] = useState(false);
+  const [nameValue, setNameValue] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  
+  const [selectedGroup, setSelectedGroup] = useState('');
+  const groups = [
+    { id: 1, name: "Group Admin" },
+    { id: 2, name: "System User" },
+  ];
 
-  let getUserList = async(pageNo ,pageSize ) => {
-    try{
-      let response = await axios.get(`https://upskilling-egypt.com:3006/api/v1/Users/`,
-        {
-          headers: {Authorization:localStorage.getItem("token")},
-          params: {
-            pageSize: pageSize , 
-            pageNumber: pageNo , 
-          }
-        });
+  // Fetch user list
+  const getUserList = async (pageNo, pageSize, userName ,groups) => {
+    try {
+      let response = await axios.get(`https://upskilling-egypt.com:3006/api/v1/Users/`, {
+        headers: { Authorization: localStorage.getItem("token") },
+        params: {
+          pageSize: pageSize,
+          pageNumber: pageNo,
+          userName: userName,
+          groups: groups,
+        }
+      });
       setUserList(response.data.data);
       setTotalPages(response.data.totalNumberOfPages);
-    }catch(error){
-     console.log(error);
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to fetch users.");
     }
   };
 
@@ -48,7 +58,7 @@ export default function UserList() {
             headers: {Authorization:localStorage.getItem("token")},
           }
         );
-        getUserList();
+        getUserList(currentPage, 5);
         toast.success("Operation completed successfully!");
       }catch(error){
         toast.error("An error occurred. Please try again."); // Handle errors
@@ -71,15 +81,27 @@ export default function UserList() {
     setShowView(true);
   };
 
- 
+  // Handel Search input
+  const getnameValue = (input) => {
+  setNameValue(input.target.value);
+  getUserList( 1 , 5 , input.target.value , groups);
+  };
+
+  //Handel Filter by groupId
+  const handleGroupChange = (event) => {
+    const groups = event.target.value;
+    setSelectedGroup(groups);
+    getUserList(1, 5, nameValue, groups); // Reset to page 1 on group change
+  };
+
   // Handel Pagination
   useEffect(() => {
-    getUserList(currentPage, 3);
+    getUserList(currentPage, 5 , nameValue, selectedGroup);
   }, [currentPage]);
 
   const handlePageChange = (pageNo) => {
     setCurrentPage(pageNo);
-    getUserList(pageNo, 3);
+    getUserList(pageNo, 5);
   };
 
   return (
@@ -133,12 +155,38 @@ export default function UserList() {
                 <h6 className="mb-3"><strong>Email:</strong> {selectedUser.email}</h6>
                 <h6 className="mb-3"><strong>Phone Number:</strong> {selectedUser.phoneNumber}</h6>
                 <h6 className="mb-3"><strong>Country:</strong> {selectedUser.country}</h6>
-                {/* <h6><strong>Group:</strong> {selectedUser.group}</h6> */}
+                <h6><strong>Group:</strong> {user.group.name} </h6> 
               
             </>
         )}
     </Modal.Body>
 </Modal>
+
+  {/* Fillter & Search  */}
+  <div className="mb-4 d-flex">
+  <div className="search-bar col-md-9 m-1">
+    <input
+      type="text"
+      className="form-control"
+      placeholder="Search here..."
+      onChange={getnameValue}
+    />
+  </div>
+
+  <div className="tags-dropdown  m-1 col-md-3">
+    <select 
+    className="form-select" 
+    value={selectedGroup} 
+    onChange={handleGroupChange}
+    >
+      <option value="">Group</option>
+            {groups.map(({ id, name }) => (
+              <option key={id} value={id}>{name}</option>
+            ))}
+    </select>
+  </div>
+</div>
+
 
 <div className="w-100 rounded-5 py-4 px-5 mb-4 bg-secondary-subtle d-flex justify-content-between align-items-center" >
     <h6>id</h6>
@@ -146,8 +194,8 @@ export default function UserList() {
     <h6>email</h6>
     <h6>phoneNumber</h6>
     <h6>country</h6>
+    <h6> Group</h6>
     <h6>Profile Picture</h6>
-   
     <h6>Action</h6>
   </div>
 
@@ -164,7 +212,7 @@ export default function UserList() {
       <td>{user.email}</td>
       <td>{user.phoneNumber}</td>
       <td>{user.country}</td>  
-        {/* <td>{user. user.group[0].name}</td> */}
+      <td>{user.group.name}</td>
 
         <td>  
           

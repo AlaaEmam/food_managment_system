@@ -8,14 +8,16 @@ import Edit from '../../../../assets/Edit.png'
 import Delete from '../../../../assets/delete.png'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify';
+import Modal from 'react-bootstrap/Modal';
 import DeleteConfirmation from '../../../shared/components/DeleteConfirmation/DeleteConfirmation'
 import NoData from './../../../shared/components/NoData/NoData';
+import closeButton from '../../../../assets/closeButton.png';
 import NoImage from '../../../../assets/noimg.jpg';
 import Pagination from '../../../shared/components/Pagination/Pagination'
 
 export default function RecipesList() {
    // imageURL
-  const imageBaseURL = 'https://upskilling-egypt.com:3006'; // Set the base URL
+  const imageBaseURL = 'https://upskilling-egypt.com:3006'; 
   const [recipesList ,setRecipesList]= useState([]);
   const [selectedId ,setSelectedId] = useState(0);
   const [tags, setTags] = useState([]);
@@ -23,6 +25,7 @@ export default function RecipesList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
+  
   const [showView, setShowView] = useState(false);
   const [nameValue, setNameValue] = useState('');
   const [tagValue, setTagValue] = useState('');
@@ -107,6 +110,14 @@ export default function RecipesList() {
     setShowDelete(true);
   };
 
+  //Modal View
+  const handleCloseView = () => setShowView(false);
+
+  const handleShowView = (recipe) => {
+    setSelectedRecipe(recipe);
+    setShowView(true);
+  };
+
   // Handel Search input
   const getnameValue = (input) => {
   setNameValue(input.target.value);
@@ -125,14 +136,6 @@ export default function RecipesList() {
   getRecipesList( 1 , 3 , nameValue , input.target.value , catValue );
   };
   
-  //Modal View
-  const handleCloseView = () => setShowView(false);
-  const handleShowView = (user) => {
-    setSelectedRecipe(recipe);
-    setShowView(true);
-  };
-
-
   // Handel Pagination
   
   useEffect(() => {
@@ -197,11 +200,46 @@ export default function RecipesList() {
       </div>
     </div>
 
+<DeleteConfirmation 
+  showDelete={showDelete}
+  handleCloseDelete={handleCloseDelete}
+  deleteItem={'Recipes'}
+  deleteFunction={deleteRecipe}
+/>
 
-    {/* <div class="mb-4 d-flex "><div class=" col-md-6 search-bar "><input type="text" class=" form-control" placeholder="Search here..."></div><div class="category-dropdown mr-2 col-md-3"><select class="form-select"><option value="">Category</option><option>Electronics</option><option>Car</option><option>new</option><option>american</option><option>American</option><option>indian</option><option>Pizza</option><option>Pizza</option><option>sweet</option><option>pastaaaa</option></select></div><div class="tags-dropdown mr-2  col-md-3"><select class="form-select"><option value="">Tags</option><option value="1">Appetizer</option><option value="2">Dessert</option><option value="3">Snack</option><option value="4">Vegetarian</option><option value="5">Spicy</option><option value="6">Organic</option></select></div></div> */}
+{/* View user Modal */}
+<Modal show={showView} onHide={handleCloseView} centered>
+  <Modal.Header className='d-flex justify-content-between align-items-center'>
+      <h5>View Recipe Data</h5>
+      <img role="button" src={closeButton} onClick={handleCloseView} alt="Close" />
+  </Modal.Header>
+  <Modal.Body className="text-center">
+      {selectedRecipe && (
+          <>
+            <div className="mb-4">
+            {selectedRecipe.imagePath ? (
+              <img 
+              src={`${imageBaseURL}/${selectedRecipe.imagePath}`}
+                alt={selectedRecipe.name} 
+                style={{ width: '200px', height: '200px'}} 
+              />
+            ) : ( 
+            <img src={NoImage} alt="Placeholder" style={{ width: '200px', height: '200px'}} />
+            )}
+            </div>
+              <h6 className="mb-3"><strong>Recipe Name:</strong>{selectedRecipe.name}</h6>
+              <h6 className="mb-3"><strong>Tag:</strong>{selectedRecipe.tag.name}</h6>
+              <h6 className="mb-3"><strong>Description:</strong>{selectedRecipe.description} </h6> 
+              <h6 className="mb-3"><strong>Category:</strong>{selectedRecipe.category && selectedRecipe.category.length > 0 ? selectedRecipe.category[0].name : 'Default Category'} </h6> 
+              <h6 className="mb-3"><strong>Price:</strong> {selectedRecipe.price} Le</h6>
+          </>
+      )}
+  </Modal.Body>
+</Modal>
+
 
   <div className="w-100 rounded-5 py-4 px-5 mb-4 bg-secondary-subtle d-flex justify-content-between align-items-center" >
-    <h6>Item Name</h6>
+    <h6>Recipe Name</h6>
     <h6>Image</h6>
     <h6>Price</h6>
     <h6>Tag</h6>
@@ -210,12 +248,6 @@ export default function RecipesList() {
     <h6>Action</h6>
   </div>
 
-  <DeleteConfirmation 
-    showDelete={showDelete}
-    handleCloseDelete={handleCloseDelete}
-    deleteItem={'Recipes'}
-    deleteFunction={deleteRecipe}
-    />
 
 {recipesList.length > 0 ? 
   <Table striped borderless hover >
@@ -233,7 +265,7 @@ export default function RecipesList() {
           ) : (
             <img src={NoImage} alt="Placeholder" style={{ width: '56px', height: '56px' }} />
           )}</td>
-        <td>{recipe.price}</td>
+        <td>{recipe.price} LE</td>
         <td>{recipe.tag.name}</td>
         <td>{recipe.description}</td>
         <td>{recipe.category && recipe.category.length > 0 ? recipe.category[0].name : 'Default Category'}</td>
@@ -243,7 +275,7 @@ export default function RecipesList() {
           <i className="fa-solid fa-ellipsis text-success"></i>
           </div>
           <ul className="dropdown-menu">
-            <li><Link className="dropdown-item" ><img src={View} alt="" />View</Link></li>
+            <li><Link className="dropdown-item" onClick={() => handleShowView(recipe)} ><img src={View} alt="" />View</Link></li>
             <li><Link className="dropdown-item" to={`${recipe?.id}`} ><img src={Edit} alt="" />Edit</Link></li>
             <li><Link className="dropdown-item"  onClick={()=> handleShowDelete(recipe.id)} ><img src={Delete} alt="" />Delete</Link></li>
           </ul>

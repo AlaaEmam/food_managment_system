@@ -155,7 +155,7 @@ export default function UserList() {
                 <h6 className="mb-3"><strong>Email:</strong> {selectedUser.email}</h6>
                 <h6 className="mb-3"><strong>Phone Number:</strong> {selectedUser.phoneNumber}</h6>
                 <h6 className="mb-3"><strong>Country:</strong> {selectedUser.country}</h6>
-                <h6><strong>Group:</strong> {user.group.name} </h6> 
+                <h6 className="mb-3"><strong>Group:</strong>  {selectedUser.group ? selectedUser.group.name : 'N/A'}  </h6> 
               
             </>
         )}
